@@ -1,6 +1,0 @@
-
-- name: restart_suricata
-  service:
-      name: suricata
-      state: restarted
-      sleep: 5

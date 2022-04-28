@@ -1,8 +1,0 @@
----
-# File: java-8/defaults/main.yml
-# Description:
-# Defaults main file
-
-java_set_as_default: yes
-java_source: no
-java_source_url: "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=245467_4d5417147a92418ea8b615e228bb6935"

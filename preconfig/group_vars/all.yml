@@ -1,11 +1,7 @@
 ---
 device_aliases:
-  10.10.30.1: defend-router
-  10.10.30.101: management-ubuntu18
+  10.10.30.101: management-kali-2020
+  10.10.30.102: attacker-kali2020
   10.10.30.71: web-server-debian10
   10.10.30.81: dat-server-debian10
-  10.10.40.1: attack-router
-  10.10.40.10: attacker-kali2020
-  100.100.100.1: defend-router
-  100.100.100.2: attack-router
 ...

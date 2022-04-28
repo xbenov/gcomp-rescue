@@ -5,106 +5,14 @@
 # vi: set ft=ruby :
 
 ansible_groups = {
-  "hosts" => ["management-ubuntu18", "web-server-debian10", "dat-server-debian10", "attacker-kali2020"], 
-  "routers" => ["defend-router", "attack-router"], 
-  "ssh" => ["defend-router", "attack-router", "management-ubuntu18", "web-server-debian10", "dat-server-debian10", "attacker-kali2020"], 
+  "hosts" => ["web-server-debian10", "dat-server-debian10", "management-kali-2020", "attacker-kali2020"], 
+  "routers" => [], 
+  "ssh" => ["web-server-debian10", "dat-server-debian10", "management-kali-2020", "attacker-kali2020"], 
   "winrm" => [], 
-  "ansible" => ["defend-router", "attack-router", "management-ubuntu18", "web-server-debian10", "dat-server-debian10", "attacker-kali2020"]
+  "ansible" => ["web-server-debian10", "dat-server-debian10", "management-kali-2020", "attacker-kali2020"]
 }
 
 Vagrant.configure("2") do |config|
-
-  # Device(router): defend-router
-  config.vm.define "defend-router" do |device|
-    device.vm.hostname = "defend-router"
-    device.vm.box = "munikypo/debian-10"
-    device.vm.provider "virtualbox" do |vb|
-      vb.memory = 4096
-      vb.cpus = 1
-    end
-    device.vm.synced_folder ".",
-      "/vagrant",
-      type: "rsync",
-      rsync__exclude: ".git/"
-    device.vm.network "private_network",
-      virtualbox__intnet: "network-defend",
-      ip: "10.10.30.1",
-      netmask: "255.255.255.0"
-    device.vm.network "private_network",
-      virtualbox__intnet: "wan",
-      ip: "100.100.100.1",
-      netmask: "255.255.255.0"
-    device.vm.provision "ansible_local" do |ansible|
-      ansible.playbook = "preconfig/playbook.yml"
-      ansible.groups = ansible_groups
-      ansible.limit = "defend-router"
-    end
-    device.vm.provision "ansible_local" do |ansible|
-      ansible.playbook = "provisioning/playbook.yml"
-      ansible.groups = ansible_groups
-      ansible.limit = "defend-router"
-    end
-  end
-
-  # Device(router): attack-router
-  config.vm.define "attack-router" do |device|
-    device.vm.hostname = "attack-router"
-    device.vm.box = "munikypo/debian-10"
-    device.vm.provider "virtualbox" do |vb|
-      vb.memory = 4096
-      vb.cpus = 1
-    end
-    device.vm.synced_folder ".",
-      "/vagrant",
-      type: "rsync",
-      rsync__exclude: ".git/"
-    device.vm.network "private_network",
-      virtualbox__intnet: "network-attack",
-      ip: "10.10.40.1",
-      netmask: "255.255.255.0"
-    device.vm.network "private_network",
-      virtualbox__intnet: "wan",
-      ip: "100.100.100.2",
-      netmask: "255.255.255.0"
-    device.vm.provision "ansible_local" do |ansible|
-      ansible.playbook = "preconfig/playbook.yml"
-      ansible.groups = ansible_groups
-      ansible.limit = "attack-router"
-    end
-    device.vm.provision "ansible_local" do |ansible|
-      ansible.playbook = "provisioning/playbook.yml"
-      ansible.groups = ansible_groups
-      ansible.limit = "attack-router"
-    end
-  end
-
-  # Device(host): management-ubuntu18
-  config.vm.define "management-ubuntu18" do |device|
-    device.vm.hostname = "management-ubuntu18"
-    device.vm.box = "munikypo/kali-2020.4"
-    device.vm.provider "virtualbox" do |vb|
-      vb.memory = 2048
-      vb.cpus = 2
-    end
-    device.vm.synced_folder ".",
-      "/vagrant",
-      type: "rsync",
-      rsync__exclude: ".git/"
-    device.vm.network "private_network",
-      virtualbox__intnet: "network-defend",
-      ip: "10.10.30.101",
-      netmask: "255.255.255.0"
-    device.vm.provision "ansible_local" do |ansible|
-      ansible.playbook = "preconfig/playbook.yml"
-      ansible.groups = ansible_groups
-      ansible.limit = "management-ubuntu18"
-    end
-    device.vm.provision "ansible_local" do |ansible|
-      ansible.playbook = "provisioning/playbook.yml"
-      ansible.groups = ansible_groups
-      ansible.limit = "management-ubuntu18"
-    end
-  end
 
   # Device(host): web-server-debian10
   config.vm.define "web-server-debian10" do |device|
@@ -119,7 +27,7 @@ Vagrant.configure("2") do |config|
       type: "rsync",
       rsync__exclude: ".git/"
     device.vm.network "private_network",
-      virtualbox__intnet: "network-defend",
+      virtualbox__intnet: "network-gcomp",
       ip: "10.10.30.71",
       netmask: "255.255.255.0"
     device.vm.provision "ansible_local" do |ansible|
@@ -147,7 +55,7 @@ Vagrant.configure("2") do |config|
       type: "rsync",
       rsync__exclude: ".git/"
     device.vm.network "private_network",
-      virtualbox__intnet: "network-defend",
+      virtualbox__intnet: "network-gcomp",
       ip: "10.10.30.81",
       netmask: "255.255.255.0"
     device.vm.provision "ansible_local" do |ansible|
@@ -159,6 +67,34 @@ Vagrant.configure("2") do |config|
       ansible.playbook = "provisioning/playbook.yml"
       ansible.groups = ansible_groups
       ansible.limit = "dat-server-debian10"
+    end
+  end
+
+  # Device(host): management-kali-2020
+  config.vm.define "management-kali-2020" do |device|
+    device.vm.hostname = "management-kali-2020"
+    device.vm.box = "munikypo/kali-2020.4"
+    device.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+      vb.cpus = 2
+    end
+    device.vm.synced_folder ".",
+      "/vagrant",
+      type: "rsync",
+      rsync__exclude: ".git/"
+    device.vm.network "private_network",
+      virtualbox__intnet: "network-gcomp",
+      ip: "10.10.30.101",
+      netmask: "255.255.255.0"
+    device.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "preconfig/playbook.yml"
+      ansible.groups = ansible_groups
+      ansible.limit = "management-kali-2020"
+    end
+    device.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "provisioning/playbook.yml"
+      ansible.groups = ansible_groups
+      ansible.limit = "management-kali-2020"
     end
   end
 
@@ -175,8 +111,8 @@ Vagrant.configure("2") do |config|
       type: "rsync",
       rsync__exclude: ".git/"
     device.vm.network "private_network",
-      virtualbox__intnet: "network-attack",
-      ip: "10.10.40.10",
+      virtualbox__intnet: "network-gcomp",
+      ip: "10.10.30.102",
       netmask: "255.255.255.0"
     device.vm.provision "ansible_local" do |ansible|
       ansible.playbook = "preconfig/playbook.yml"
