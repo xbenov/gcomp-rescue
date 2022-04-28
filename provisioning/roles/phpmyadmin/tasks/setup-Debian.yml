@@ -1,0 +1,30 @@
+---
+- name: Add Debian repo
+  apt_repository:
+    repo: deb http://deb.debian.org/debian buster-backports main
+    update_cache: yes
+    state: present
+  become: yes
+
+- name: Ensure older php-twig is installed.
+  apt:
+    name: php-twig
+    default_release: buster-backports
+    state: present
+
+- name: Ensure phpMyAdmin is installed.
+  apt:
+    name: phpmyadmin
+    default_release: buster-backports
+    state: present
+  notify: apache_restart
+
+- name: Ensure phpMyAdmin config file is included in Apache config.
+  lineinfile:
+    dest: /etc/apache2/apache2.conf
+    state: present
+    regexp: "^Include.+phpmyadmin.+$"
+    line: "Include /etc/phpmyadmin/apache.conf"
+    insertafter: "EOF"
+    mode: 0644
+  notify: apache_restart

@@ -1,0 +1,48 @@
+---
+# File: java-8/tasks/installation/source/java-8-source.yml
+# Description: This task downloads and installs
+# Java source files.
+
+
+- name: source -> create temporary directory
+  tempfile:
+    state: directory
+  register: temp_dir
+
+- name: source -> get JAVA
+  get_url:
+    url: '{{ java_source_url }}'
+    dest: /tmp/java.tar.gz
+    validate_certs: no
+
+- name: source -> unarchive JAVA
+  unarchive:
+    remote_src: yes
+    src: /tmp/java.tar.gz
+    dest: '{{ temp_dir.path }}'
+
+- name: source -> create jvm directory
+  file:
+    path: /usr/lib/jvm
+    state: directory
+
+- name: source -> deploy java directory
+  shell: 'mv {{ temp_dir.path }}/`ls {{ temp_dir.path }} | head -n 1` /usr/lib/jvm/java-8-oracle'
+
+- name: source -> configure java
+  alternatives:
+    link: '/usr/bin/{{ item }}'
+    name: '{{ item }}'
+    path: '/usr/lib/jvm/java-8-oracle/bin/{{ item }}'
+    priority: 1
+  with_items:
+    - java
+    - javac
+
+- name: source -> set JAVA_HOME variable
+  lineinfile:
+    create: yes
+    path: /root/.mavenrc
+    line: 'export JAVA_HOME=/usr/lib/jvm/java-8-oracle'
+
+

@@ -1,0 +1,20 @@
+---
+# File: java-8/defaults/redhat.yml
+# Description:
+# Default variables for Redhat-based distributions.
+
+#java_dir_source: Where to store the RPM files.
+#java_download_timeout: download timeout in seconds.
+#java_home: Java home directory location.
+#java_rpm_filename: download destination filename.
+#java_rpm_url: RPM source URL.
+#java_rpm_validate_certs: enable/disable SSL certificate validation.
+#java_version_string: string with Java version to verify installation against.
+#
+java_dir_source: '/usr/local/src'
+java_download_timeout: 60
+java_rpm_filename: 'jdk-8u191_linux-x64.rpm'
+java_home: '/usr/java/default'
+java_rpm_url: 'http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.rpm'
+java_rpm_validate_certs: yes
+java_version_string: 1.8.0_191

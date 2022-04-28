@@ -1,0 +1,71 @@
+#------------ Linux Users -------------
+    
+# user password is pass123
+- name: Add the user 'gcomp-web'
+  user:
+    name: gcomp-web
+    comment: Management user
+    groups: sudo,www-data
+    shell: /bin/bash
+    generate_ssh_key: yes
+    password: $1$MdB63Iun$hxHA3z/h68IcUwFDR9q0e1
+
+# user password is webdev
+- name: Add the user 'webdev'
+  user:
+    name: webdev
+    comment: Web site development
+    groups: sudo,www-data
+    shell: /bin/bash
+    generate_ssh_key: yes
+    password: $1$Vd7hkkIV$GUfuLb1rv8eiuu1kA8wLQ.
+    
+#---------------- Fix session directory and permissions ---------------
+
+- name: Change session directory for php
+  lineinfile:
+    path: /etc/php/7.0/apache2/php.ini
+    search_string: 'session.save_path'
+    line: 'ession.save_path = "/var/lib/php/sessions"'
+    
+- name: Change permissions for session directory
+  file:
+    path: /var/lib/php/sessions
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data
+
+- name: Install cracklib for PAM password policies
+  apt:
+    name: libpam-cracklib
+    state: present
+
+#---------------- SSL certificates ---------------    
+
+- name: Disable SSL verification for phpmyadmin
+  lineinfile:
+    path: /usr/share/phpmyadmin/config.inc.php
+    line: "$cfg['Servers'][$i]['ssl_verify'] = false;"
+    
+#---------------- Change owners/groups and permissions of directories and files ---------------
+
+- name: Create webpage dir
+  file:
+    path: /var/www/gcomp
+    state: directory
+    mode: '0755'
+    owner: gcomp-web
+    group: gcomp-web
+    
+- name: Create webpage file
+  file:
+    path: /var/www/gcomp/index.html
+    state: touch
+    mode: '0777'
+    owner: gcomp-web
+    group: gcomp-web
+    
+
+
+

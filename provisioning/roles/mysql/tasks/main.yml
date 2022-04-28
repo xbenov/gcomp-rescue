@@ -1,0 +1,41 @@
+
+- name: Check if MySQL is already installed.
+  stat:
+      path: /etc/init.d/mysql
+  register: mysql_installed
+  
+- name: Ensure MySQL packages are installed.
+  apt: 
+      name: '{{ item }}'
+      state: present
+  with_items:
+    - default-mysql-server
+    - default-libmysqlclient-dev
+    - python-mysqldb
+    
+- name: secure installation
+  include_tasks: unsecure-installation.yml
+  when: mysql_installed.stat.exists == false
+
+- name: create mysql database
+  mysql_db:
+      login_user: '{{ mysql_root_name }}'
+      login_password: '{{ mysql_root_password }}'
+      name: '{{ mysql_database_name }}'
+  register: mysql_create_db
+  when: mysql_database_name is defined and mysql_database_name
+
+- name: execute scripts
+  include_tasks: scripts.yml
+  when: mysql_create_db.changed and mysql_database_scripts
+
+- name: create mysql user
+  mysql_user:
+      login_user: '{{ mysql_root_name }}'
+      login_password: '{{ mysql_root_password }}'
+      name: '{{ mysql_user_name }}'
+      password: '{{ mysql_user_password }}'
+      encrypted: '{{ mysql_user_encrypted | default(omit) }}'
+      priv: '{% if mysql_user_privileges %}{{ mysql_user_privileges | join("/") }}{% else %}{{ omit }}{% endif %}'
+  when: mysql_user_name is defined and mysql_user_name
+

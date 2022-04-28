@@ -1,0 +1,23 @@
+---
+# File: java-8/tasks/installation/source/main.yml
+# Description:
+# This task installs Oracle JDK into a system
+# from source. 
+
+- name: source -> install required Java packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - ca-certificates
+
+- name: source -> check if Java is downloaded
+  stat:
+    path: /usr/lib/jvm/java-8-oracle
+  register: downloaded_java
+
+- include: java-8-source.yml
+  become: yes
+  become_user: root
+  when: downloaded_java.stat.exists == False
+

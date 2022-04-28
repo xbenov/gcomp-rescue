@@ -1,0 +1,43 @@
+---
+# File: java-8/tasks/main.yml
+# Description:
+# Main task file
+#
+
+## Include variables for given OS family/distribution
+- name: include OS family/distribution specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ role_path }}/defaults/{{ ansible_os_family | lower }}-{{ ansible_distribution | lower }}.yml"
+    - "{{ role_path }}/defaults/{{ ansible_os_family | lower }}.yml"
+  when: not java_source
+  tags: [ installation ]
+
+## Check environment and print debug info 
+- name: check host environment
+  include: check_env.yml
+
+- include: debug.yml
+  when: debug | default(false)
+  tags: [ debug ]
+
+## Include task for given OS family/distribution
+- name: include OS family/distribution specific task
+  include: "{{ include_file }}"
+  with_first_found:
+    - "installation/{{ ansible_os_family | lower }}/{{ ansible_distribution | lower }}_{{ ansible_distribution_version | lower }}.yml"
+    - "installation/{{ ansible_os_family | lower }}/{{ ansible_distribution | lower }}.yml"
+    - "installation/{{ ansible_os_family | lower }}/main.yml"
+  loop_control:
+      loop_var: include_file
+  when: not java_source    
+  tags: [ installation ]
+
+## Include task to install Java from source if specified
+- name: include task for source installation
+  include: installation/source/main.yml
+  when: java_source
+  tags: [ installation ]  
+
+- name: check host environment
+  include: check_env.yml

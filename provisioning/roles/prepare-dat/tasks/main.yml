@@ -1,0 +1,129 @@
+#------------ Linux Users -------------
+
+#user password is password123
+- name: Add the user 'gcomp-dat'
+  user:
+    name: gcomp-dat
+    comment: Management user
+    groups: sudo,mysql,www-data
+    shell: /bin/bash
+    generate_ssh_key: yes
+    password: $1$UYPPl1Zt$4YOZhoxZE0qcVfb19JNtJ1
+
+#user password is SomethingStronger
+- name: Add the user 'datservice'
+  user:
+    name: datservice
+    comment: Database service management
+    groups: sudo,mysql,www-data
+    shell: /bin/bash
+    generate_ssh_key: yes
+    password: $1$IHa3Jflx$vxlUnkXflEK9e2Lpn8CUR/
+
+#user password is test
+- name: Add the user 'test'
+  user:
+    name: test
+    comment: test
+    groups: sudo
+    shell: /bin/bash
+    generate_ssh_key: yes
+    password: $1$jY6wmA7d$058WRdMMDTWq8CuuenkjD0
+
+- name: Install cracklib for PAM password policies
+  apt:
+    name: libpam-cracklib
+    state: present
+
+#----------- MySQL database configuration --------------
+
+- name: Make mysql accept requests from web server
+  command: >
+    mysql -NBe
+    'GRANT ALL ON *.* TO "gcomp"@"10.10.30.71" IDENTIFIED BY "AVeryStrongP455";'
+
+- name: Make mysql accept requests from management
+  command: >
+    mysql -NBe
+    'GRANT ALL ON *.* TO "gcomp"@"10.10.30.101" IDENTIFIED BY "AVeryStrongP455";'
+
+- name: Make mysql listen to web server
+  lineinfile:
+    path: /etc/mysql/mariadb.conf.d/50-server.cnf
+    search_string: 'bind-address'
+    line: bind-address                = 0.0.0.0
+  notify: mysql_restart
+    
+- name: Allow root login remotely
+  mysql_user:
+   name: root
+   host: '%'
+   password: UnusualToor
+   priv: '*.*:ALL,GRANT'
+   state: present
+
+- name: Add anonymous MySQL users.
+  mysql_user:
+    name: ''
+    host: 'localhost'
+    state: present
+
+- name: Add MySQL test database.
+  mysql_db:
+      name: test
+      state: present
+
+- name: Create and grant privileges to test mysql user 
+  mysql_user:
+   name: test
+   host: '10.10.30.71'
+   password: test
+   priv: 'test.*:ALL'
+   state: present
+
+- name: Create and grant exccesive privileges to test mysql user
+  command: >
+    mysql -NBe
+    'GRANT ALL ON test.* TO "test"@"10.10.30.71" IDENTIFIED BY "test" with grant option;'
+
+#---------------- SSL certificates ---------------
+
+- name: Create dir for certificates
+  file:
+    path: /etc/mysql/ssl
+    state: directory
+    mode: '0755'
+
+- name: Create certificates
+  script: "ssl_cert.sh"
+
+#---------------- Change owners/groups and permissions of directories and files ---------------
+
+- name: conf.d dir change
+  file:
+    path: /etc/mysql/conf.d
+    state: directory
+    mode: '0764'
+    owner: test
+    group: test
+    recurse: yes
+    
+- name: Make the dir executable
+  file:
+    path: /etc/mysql/conf.d
+    state: directory
+    mode: '0755'
+    
+- name: mariadb.cnf file change
+  file:
+    path: /etc/mysql/mariadb.cnf
+    state: file
+    mode: '0775'
+    owner: test
+    group: test
+    
+
+
+    
+
+

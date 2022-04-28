@@ -1,0 +1,20 @@
+
+- name: copy virtualhost configuration file
+  copy:
+      src: '{{ apache_virtualhost }}'
+      dest: /etc/apache2/sites-available
+  when: 'apache_virtualhost is match("^.*[^\.j2]$")'
+ 
+- name: copy virtualhost configuration template
+  template:
+      src: '{{ apache_virtualhost }}'
+      dest: '/etc/apache2/sites-available/{{ apache_virtualhost | regex_search("^.*(?=\.j2)") }}'
+  when: 'apache_virtualhost is match("^.*\.j2$")'
+
+- name: enable apache sites
+  shell: 'a2ensite {{ apache_virtualhost | regex_search("^.*(?=\.j2)|^.*(?!\.j2)") }}'
+  notify:
+      - apache_reload
+  register: apache_dissite
+  changed_when: '"reload" in apache_dissite.stdout'
+

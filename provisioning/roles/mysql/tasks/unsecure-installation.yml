@@ -1,0 +1,24 @@
+
+- name: Get MySQL version.
+  command: mysql --version
+  register: mysql_cli_version
+  changed_when: false
+
+# Note: We do not use mysql_user for this operation, as it doesn't always update
+# the root password correctly. See: https://goo.gl/MSOejW
+# Set root password for MySQL >= 5.7.x.
+- name: Update MySQL root password for localhost root account (5.7.x).
+  command: >
+    mysql -u root -NBe
+    'ALTER USER "{{ mysql_root_name }}"@"{{ item }}" IDENTIFIED WITH mysql_native_password BY "{{ mysql_root_password }}";'
+  with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
+  when: '"5.7." in mysql_cli_version.stdout'
+
+# Set root password for MySQL < 5.7.x.
+- name: Update MySQL root password for localhost root account (< 5.7.x).
+  command: >
+    mysql -NBe
+    'SET PASSWORD FOR "{{ mysql_root_name }}"@"{{ item }}" = PASSWORD("{{ mysql_root_password }}");'
+  with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
+  when: '"5.7." not in mysql_cli_version.stdout'
+

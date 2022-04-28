@@ -1,0 +1,23 @@
+---
+# File: java-8/defaults/debian.yml
+# Description:
+# Default variables for Debian-based distributions.
+
+
+#java_apt_repository: Java source PPA for installation.
+#java_apt_repository_key: PPA key.
+#java_cache_valid_time: how many seconds is the apt cache valid.
+#java_deb_package: name of the Debian package.
+#java_debconf_package_default: name of the Debconf package to set default.
+#java_home: Java home directory location.
+#java_state: the package state.
+
+
+java_apt_repository: 'ppa:linuxuprising/java'
+java_apt_repository_key: 'C2518248EEA14886'
+java_cache_valid_time: 3600
+java_deb_package: 'openjdk-8-jdk'
+java_debconf_package_default: 'oracle-java8-set-default'
+java_home: "/usr/lib/jvm/java-8-oracle"
+java_license_version: 'shared/accepted-oracle-license-v1-1'
+java_state: present

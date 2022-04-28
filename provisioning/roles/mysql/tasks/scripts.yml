@@ -1,0 +1,36 @@
+
+- name: check remote existence of scripts
+  stat:
+      path: '{{ item }}'
+  with_items: '{{ mysql_database_scripts }}'
+  register: mysql_database_scripts_remote_existence
+
+- name: create temporary directory
+  tempfile:
+      state: directory
+      suffix: mysql
+  register: mysql_temporary_directory
+
+- name: copy SQL scripts
+  copy:
+      remote_src: '{{ item.stat.exists }}'
+      src: '{{ item.item }}'
+      dest: '{{ mysql_temporary_directory.path }}/{{ item.item|basename }}'
+  with_items: '{{ mysql_database_scripts_remote_existence.results }}'
+
+- set_fact:
+      mysql_owners_scripts:
+  when: mysql_user_name is defined and mysql_user_name and
+        mysql_user_password is defined and mysql_user_password
+
+- name: restore database
+  mysql_db:
+      #login_user: '{% if mysql_owners_scripts is defined %}{{ mysql_user_name }}{% else %}{{ mysql_root_name }}{% endif %}'
+      #login_password: '{% if mysql_owners_scripts is defined %}{{ mysql_user_password }}{% else %}{{ mysql_root_password }}{% endif %}'
+      login_user: '{{ mysql_root_name }}'
+      login_password: '{{ mysql_root_password }}'
+      name: '{{ mysql_database_name }}'
+      state: import
+      target: '{{ mysql_temporary_directory.path }}/{{ item|basename }}'
+  with_items: '{{ mysql_database_scripts }}'
+

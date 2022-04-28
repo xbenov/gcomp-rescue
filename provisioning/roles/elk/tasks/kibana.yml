@@ -1,0 +1,19 @@
+
+- name: install kibana
+  apt:
+    name: kibana=6.5.4
+  notify: elk_kibana_start
+
+- include_tasks: configure.yml
+  with_items:
+    - name: '{{ elk_kibana_configuration_file }}'
+      config: '{{ elk_kibana_configuration }}'
+      separator: ': '
+  loop_control:
+      loop_var: file
+
+- name: enable kibana to run on boot
+  service:
+      name: kibana
+      enabled: yes
+  notify: elk_kibana_restart

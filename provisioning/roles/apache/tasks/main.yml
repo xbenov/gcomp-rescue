@@ -1,0 +1,35 @@
+
+- name: install apache packages
+  apt:
+      name: '{{ item }}'
+      state: present
+  with_items:
+      - apache2
+      - '{{ apache_packages }}'
+
+- name: disable apache default sites
+  shell: 'a2dissite {{ item }}'
+  with_items:
+      - 000-default
+      - default-ssl
+  notify:
+      - apache_reload
+  register: apache_dissite
+  changed_when: '"reload" in apache_dissite.stdout'
+
+- name: enable modules
+  apache2_module:
+      state: present
+      name: '{{ item }}'
+  with_items: '{{ apache_enable_mods }}'
+
+- name: setup virtualhost
+  include_tasks: virtualhost.yml
+  when: apache_virtualhost is defined and apache_virtualhost
+
+- name: set the listening port
+  lineinfile:
+      dest: /etc/apache2/ports.conf
+      line: Listen {{ apache_listen_port }}
+  when: apache_listen_port is defined and apache_listen_port
+ 

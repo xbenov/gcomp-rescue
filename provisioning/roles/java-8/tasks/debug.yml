@@ -1,0 +1,21 @@
+---
+# File: java-8/tasks/debug.yml
+# Description:
+# This task just prints
+# debug information about vars.
+#
+
+- debug:
+    var: "{{ item }}"
+  when: item is defined
+  with_items:
+    - java_cache_valid_time
+    - java_home
+    - java_installed
+    - java_apt_repository
+    - java_apt_repository_key
+    - java_license_version
+    - java_set_as_default
+    - java_state
+    - java_version_installed
+    - java_version_string

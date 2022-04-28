@@ -1,0 +1,46 @@
+---      
+# Install software on servers
+
+- name: "prepare management"
+  hosts: management-ubuntu18
+  become: yes
+  roles: 
+    - role: prepare-man
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  
+- name: "prepare dat-server"
+  hosts: dat-server-debian10
+  become: yes
+  roles:   
+    - role: mysql
+      mysql_user_name: gcomp
+      mysql_user_password: AVeryStrongP455
+      mysql_user_privileges:
+        - gcomp_db.*:ALL
+      mysql_database_name: gcomp_db
+      mysql_database_scripts: 
+        - "create_tables.sql"
+        - "populate_tables.sql"
+   
+    - role: prepare-dat
+
+- name: "prepare web-server"
+  hosts: web-server-debian10
+  become: yes
+  roles:
+    - role: apache
+    
+    - role: php
+      php_webserver_daemon: "apache2"
+    
+    - role: phpmyadmin
+      phpmyadmin_install_from_source: true
+      phpmyadmin_mysql_host: 10.10.30.81
+      phpmyadmin_mysql_port: "3306"
+      phpmyadmin_mysql_socket: ""
+      phpmyadmin_mysql_connect_type: tcp
+      phpmyadmin_mysql_user: gcomp
+      phpmyadmin_mysql_password: AVeryStrongP455  
+      
+    - role: prepare-web

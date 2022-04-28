@@ -1,0 +1,29 @@
+- name: Install sshpass
+  apt:
+    name: sshpass
+    state: present
+    
+- name: Create directories for task validation
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  loop:
+    - /home/kali/check_tasks/
+    - /home/kali/check_tasks/files/
+    
+- name: Copy task check scripts
+  copy:
+    src: "{{ item }}"
+    dest: /home/kali/check_tasks/
+    owner: kali
+    mode: u=rw,g=r,o=x
+  loop:
+    - "task1_test.sh"
+    - "task2_test.sh"
+    - "task3_test.sh"
+    - "task4_test.sh"
+    - "task5_test.sh"
+    

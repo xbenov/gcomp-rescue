@@ -1,0 +1,29 @@
+
+- name: install elasticsearch
+  apt:
+    name: elasticsearch=6.5.4
+  notify: elk_elasticsearch_start
+
+- include_tasks: configure.yml
+  with_items:
+    - name: '{{ elk_elasticsearch_configuration_file }}'
+      config: '{{ elk_elasticsearch_configuration }}'
+      separator: ': '
+    - name: '{{ elk_elasticsearch_log4j2_configuration_file }}'
+      config: '{{ elk_elasticsearch_log4j2_configuration }}'
+      separator: ' = '
+    - name: '{{ elk_elasticsearch_jvm_options_file }}'
+      config:
+          - key: -Xms
+            value: '{{ elk_elasticsearch_jvm_heap_min }}'
+          - key: -Xmx
+            value: '{{ elk_elasticsearch_jvm_heap_max }}'
+      separator: ''
+  loop_control:
+      loop_var: file
+
+- name: enable elasticsearch to run on boot
+  service:
+      name: elasticsearch
+      enabled: yes
+

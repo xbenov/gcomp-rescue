@@ -1,0 +1,41 @@
+---
+# File: java-8/tasks/check_env.yml
+# Description: 
+# This task checks host envinronment
+# and sets these facts:
+#   - Is Java already installed?
+#   - If so, which Java version is already installed?
+
+- name: check if Java is already installed
+  shell: which java
+  register: java_task_installed
+  changed_when: java_task_installed.rc != 0
+  failed_when: no
+
+  # java_installed.rc=0 means installed
+  # java_installed.rc=1 means not installed
+- name: set fact java_installed
+  set_fact:
+    java_installed: "{{ not java_task_installed.changed }}"
+
+- name: check installed Java version
+  shell: java -version 2>&1 | head -n 1 | awk '{ print $3 }' | awk -F '"' '{ print $2 }'
+  register: java_task_version
+  when: java_installed
+  changed_when: False
+
+- name: set fact java_installed_version
+  set_fact:
+    java_version_installed: "{{ java_task_version.stdout }}"
+  when: java_task_version is defined and java_task_version.stdout is defined
+  changed_when: False
+
+- debug:
+    var: "{{ item }}"
+  when: item is defined and debug | default(false)
+  with_items:
+    - java_installed
+    - java_task_installed
+    - java_task_version
+    - java_version_installed
+  tags: [ debug ]

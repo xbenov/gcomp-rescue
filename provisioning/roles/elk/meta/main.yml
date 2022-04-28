@@ -1,0 +1,17 @@
+
+galaxy_info:
+  author: Kamil Andoniadis
+  description: Install Elasticsearch, Logstash and Kibana
+  company: CSIRT-MU
+
+  license: MIT
+
+  min_ansible_version: 2.4
+
+  platforms:
+  - name: Debian
+    versions:
+    - all
+
+dependencies: []
+
