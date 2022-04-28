@@ -1,8 +1,8 @@
 ---      
 # Install software on servers
 
-- name: "prepare management"
-  hosts: management-ubuntu18
+- name: "Prepare management"
+  hosts: management-kali2020
   become: yes
   roles: 
     - role: prepare-man
