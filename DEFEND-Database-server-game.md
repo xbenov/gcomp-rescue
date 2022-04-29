@@ -44,8 +44,9 @@ On the database server, log in to the mysql service as the root user, there is n
   <summary>HINT 1</summary>
 
 	To use the mysql service type `mysql -u USER`, where USER is the name of the user to log in as. 
-A simple SQL query to check the user table is `SELECT user,host,password FROM mysql.user`
-Use an internet search engine to find how to perform these simple tasks as SQL queries.
+	A simple SQL query to check the user table is `SELECT user,host,password FROM mysql.user`
+	Use an internet search engine to find how to perform these simple tasks as SQL queries.
+	
 </details>
 
 ## Task 2: phpMyAdmin configuration
