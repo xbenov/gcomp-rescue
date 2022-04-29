@@ -60,6 +60,7 @@ On the web server, set an **alias for the phpMyAdmin** web app in the **Apache c
 ### Hints:
 <details>
   <summary>HINT 1</summary>
+	
 The path to the phpMyAdmin configuration file is: "/usr/share/phpmyadmin/config.inc.php"
 	
 The path to the Apache configuration file for alias change is: "/etc/apache2/apache2.conf"
@@ -116,6 +117,7 @@ After setting the new password policies, **change passwords for all users**. Che
 ### Hints:
 <details>
   <summary>HINT 1</summary>
+	
 	man pam_cracklib
 	man gpasswd
 </details>
