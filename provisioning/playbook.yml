@@ -2,7 +2,7 @@
 # Install software on servers
 
 - name: "Prepare management"
-  hosts: management-kali2020
+  hosts: management-kali-2020
   become: yes
   roles: 
     - role: prepare-man

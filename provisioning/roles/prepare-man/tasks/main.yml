@@ -1,3 +1,19 @@
+# heslo je manager-gcomp
+- name: Create management user
+  user:
+    name: manager
+    comment: System management
+    groups: sudo
+    shell: /bin/bash
+    generate_ssh_key: yes
+    password: '$6$UuC1Kh5VFZ5i2qle$dwGReQk/lj4aZXEUfKuLsLm5mp2bU3Gm10NtgLfuq.NkXza8DR98d3K7OseQvobGWENfKXB5dsayidMG/jYCm.'
+
+- name: Remove kali user
+  user:
+    name: kali
+    state: absent
+    remove: true
+    
 - name: Install sshpass
   apt:
     name: sshpass
@@ -11,19 +27,19 @@
     group: root
     mode: 0775
   loop:
-    - /home/kali/check_tasks/
-    - /home/kali/check_tasks/files/
+    - /home/manager/check_tasks/
+    - /home/manager/check_tasks/files/
     
 - name: Copy task check scripts
   copy:
     src: "{{ item }}"
-    dest: /home/kali/check_tasks/
-    owner: kali
+    dest: /home/manager/check_tasks/
+    owner: root
     mode: u=rw,g=r,o=x
   loop:
-    - "task1_test.sh"
-    - "task2_test.sh"
-    - "task3_test.sh"
-    - "task4_test.sh"
-    - "task5_test.sh"
+    - "task1_test"
+    - "task2_test"
+    - "task3_test"
+    - "task4_test"
+    - "task5_test"
     
