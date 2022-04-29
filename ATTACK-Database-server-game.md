@@ -20,7 +20,10 @@ The flag is the name of the web application that can be found on the web server.
 
 ### Hints:
 
->! hint
+<details>
+  <summary>HINT</summary>
+  hint jeden
+</details>
 
 ## Task 2: Enumerate 
 
