@@ -19,10 +19,9 @@ You found that one of the machines runs Apache service. Do a **web server scan**
 The flag is the name of the web application that can be found on the web server.
 
 ### Hints:
-
 <details>
-  <summary>HINT</summary>
-  hint jeden
+  <summary>HINT 1</summary>
+ 
 </details>
 
 ## Task 2: Enumerate 
@@ -44,7 +43,10 @@ After setting all these options, type `run` and let the scan do its work, until 
 The flag are the login credentials to phpMyadmin in format “**username:password**”.
 
 ### Hints:
- >! hint
+<details>
+  <summary>HINT 1</summary>
+ 
+</details>
 
 ## Task 3: Exploit
 
@@ -61,7 +63,10 @@ Look up what commands you can use with meterpreter session if you want to have a
 The flag is login credentials to MySQL in the form “**username:password**”.
 
 ### Hints:
->! hint
+<details>
+  <summary>HINT 1</summary>
+ 
+</details>
   
 
 ## Task 4: Get more information
@@ -75,7 +80,10 @@ Now it’s time to crack some hashes. You can use the password hash cracking too
 The flag is the password you uncovered by hash cracking.
 
 ### Hints:
-  >! hint
+<details>
+  <summary>HINT 1</summary>
+ 
+</details>
   
 
 ## Task 5: Get the secret information
@@ -89,5 +97,8 @@ We now have all the access to all databases. Get the **secret data from gcomp**.
 The flag is in a database table row value in the format “**FLAG:************”, where ********* is a secret message.
 
 ### Hints:
->! hint
+<details>
+  <summary>HINT 1</summary>
+ 
+</details>
   

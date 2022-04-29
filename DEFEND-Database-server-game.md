@@ -40,11 +40,12 @@ On the database server, log in to the mysql service as the root user, there is n
     
 
 ### Hints:
-
->! To use the mysql service type “mysql -u USER”, where USER is the name
->! of the user to log in as. A simple query to check the user table is
->! “SELECT user,host,password FROM mysql.user” Use an internet search
->! engine to find how to perform these simple tasks as mysql queries.
+<details>
+  <summary>HINT 1</summary>
+To use the mysql service type `mysql -u USER`, where USER is the name of the user to log in as. 
+A simple SQL query to check the user table is `SELECT user,host,password FROM mysql.user`
+Use an internet search engine to find how to perform these simple tasks as SQL queries.
+</details>
 
 ## Task 2: phpMyAdmin configuration
 
@@ -53,9 +54,11 @@ On the database server, log in to the mysql service as the root user, there is n
 On the web server, set an **alias for the phpMyAdmin** web app in the **Apache configuration file**. After that open the phpMyAdmin configuration file and review the settings. Configure a **blowfish secret** and **remove leftover credentials** for connection to MySQL which were left behind.
 
 ### Hints:
-
->! The path to the phpMyAdmin configuration file is: `/usr/share/phpmyadmin/config.inc.php` 
->! The path to the Apache configuration file for alias change is: `/etc/apache2/apache2.conf`
+<details>
+  <summary>HINT 1</summary>
+The path to the phpMyAdmin configuration file is: `/usr/share/phpmyadmin/config.inc.php` 
+The path to the Apache configuration file for alias change is: `/etc/apache2/apache2.conf`
+</details>
 
 ## Task 3: SSL communication
 
@@ -72,7 +75,10 @@ Do the same on the web server side with the **phpMyAdmin configuration file**. L
 Don’t forget to change the appropriate **owner and group for all files used for SSL**, so that Apache which runs under `www-data` and Mysql which runs under `mysql` can read them.
 
 ### Hints:
-  >! hint
+<details>
+  <summary>HINT 1</summary>
+  
+</details>
 
 ## Task 4: Linux user accounts security
 
@@ -103,9 +109,12 @@ Configure **password policy** to force users to use stronger passwords. Use **cr
 After setting the new password policies, **change passwords for all users**. Check group permissions for user accounts. Only **user accounts with gcomp prefix** in their name **should have sudo group** assigned.
 
 ### Hints:
+<details>
+  <summary>HINT 1</summary>
+`man pam_cracklib`
+`man gpasswd`
+</details>
 
->! man pam_cracklib 
->! man gpasswd
 
 ## Task 5: File permissions
 
@@ -118,4 +127,7 @@ On the **web server**, navigate to `/var/www` directory and **change all directo
 On the **database server**, navigate to `/etc/mysql` directory and **change all directories and files** inside to **owner** `datservice` and to **group** `mysql`. Also **change the file permissions to all directories and files to 750**.
 
 ### Hints:
->! hint
+<details>
+  <summary>HINT 1</summary>
+
+</details>
