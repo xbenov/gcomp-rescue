@@ -41,7 +41,7 @@ On the database server, log in to the mysql service as the root user, there is n
 
 ### Hints:
 <details>
-  <summary>HINT 1</summary>
+  <summary>HINT</summary>
 
 To use the mysql service type "mysql -u USER", where USER is the name of the user to log in as.
 	
@@ -59,11 +59,12 @@ On the web server, set an **alias for the phpMyAdmin** web app in the **Apache c
 
 ### Hints:
 <details>
-  <summary>HINT 1</summary>
+  <summary>HINT</summary>
 	
 The path to the phpMyAdmin configuration file is: "/usr/share/phpmyadmin/config.inc.php"
 	
 The path to the Apache configuration file for alias change is: "/etc/apache2/apache2.conf"
+
 </details>
 
 ## Task 3: SSL communication
@@ -74,7 +75,7 @@ We want to secure our communication from phpMyAdmin to MySQL **using SSL**. We a
 
 We now need to **copy the CA certificate, client key and client certificate** to the web server.
 
-After that, **open and edit the MySQL configuration file** and set up SSL configuration settings. There’s a peculiarity in the commented out SSL settings provided in the configuration file and it’s that “`ssl = on`” is not a valid setting. The correct setting that you must use is “`ssl = true`”.
+After that, **open and edit the MySQL configuration file** `/etc/mysql/mariadb.conf.d/50-server.cnf` and set up SSL configuration settings. There’s a peculiarity in the commented out SSL settings provided in the configuration file and it’s that “`ssl = on`” is not a valid setting. The correct setting that you must use is “`ssl = true`”.
 
 Do the same on the web server side with the **phpMyAdmin configuration file**. Leave the `ssl_verify` setting as false.
 
@@ -82,8 +83,14 @@ Don’t forget to change the appropriate **owner and group for all files used fo
 
 ### Hints:
 <details>
-  <summary>HINT 1</summary>
-  
+  <summary>HINT</summary>
+
+You can use the rsync tool to copy the files.
+
+In the configuration files, you just need to specify the paths to certificates and keys, and to turn SSL on.
+
+Remember that the database server uses server key and certificate and the web server uses client key and certificate.
+
 </details>
 
 ## Task 4: Linux user accounts security
@@ -116,7 +123,7 @@ After setting the new password policies, **change passwords for all users**. Che
 
 ### Hints:
 <details>
-  <summary>HINT 1</summary>
+  <summary>HINT</summary>
 	
 	man pam_cracklib
 	man gpasswd
@@ -135,6 +142,9 @@ On the **database server**, navigate to `/etc/mysql` directory and **change all 
 
 ### Hints:
 <details>
-  <summary>HINT 1</summary>
+  <summary>HINT</summary>
+
+	man chown
+	man chmod
 
 </details>
