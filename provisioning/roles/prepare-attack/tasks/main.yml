@@ -1,0 +1,8 @@
+  
+- name: Copy flag check binary
+  copy:
+    src: "flag-check"
+    dest: /home/kali/
+    owner: root
+    mode: u=rw,g=r,o=x
+    

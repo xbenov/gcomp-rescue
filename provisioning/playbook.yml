@@ -8,6 +8,12 @@
     - role: prepare-man
   vars:
     ansible_python_interpreter: /usr/bin/python3
+    
+- name: "Prepare attacker"
+  hosts: attacker-kali2020
+  become: yes
+  roles: 
+    - role: prepare-attack
   
 - name: "prepare dat-server"
   hosts: dat-server-debian10
