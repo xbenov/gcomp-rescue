@@ -20,12 +20,12 @@ The flag is the name of the web application that can be found on the web server.
 
 ### Hints:
 <details>
-  <summary>HINT 1</summary>
+  <summary>HINT</summary>
   
- -   man nmap
--   Look at the -sV option for nmap.
--   man nikto
--   Output from the nikto tool shows you some interesting directories it found, which suggest the presence of a well known web application.
+ -   `man nmap`
+-   Look at the `-sV` option for `nmap`.
+-   `man nikto`
+-   Output from the `nikto` tool shows you some interesting directories it found, which suggest the presence of a well known web application.
 </details>
 
 ## Task 2: Enumerate 
@@ -46,11 +46,11 @@ The flag are the login credentials to phpMyadmin in format “**username:passwor
 
 ### Hints:
 <details>
-  <summary>HINT 1</summary>
+  <summary>HINT</summary>
 
--   Here are the msfconsole commands you will need to use: search, use, options, set, run
--   When you start msfconsole and search for “phpmyadmin“, you can type “use #”, where # is the number of the search result.
--   For the TARGETURI option, remember from Task 1 what was the main directory of the web application and just put it before the /index.php that’s set as default.
+-   Here are the `msfconsole` commands you will need to use: `search`, `use`, `options`, `set`, `run`
+-   When you start `msfconsole` and search for “phpmyadmin“, you can type `use #`, where # is the number of the search result.
+-   For the TARGETURI option, remember from Task 1 what was the main directory of the web application and just put it before the `/index.php` that’s set as default.
 </details>
 
 ## Task 3: Exploit
@@ -69,11 +69,11 @@ The flag is login credentials to MySQL in the form “**username:password**”.
 
 ### Hints:
 <details>
-  <summary>HINT 1</summary>
+  <summary>HINT</summary>
  
  -   The exploit module is called “phpmyadmin_lfi_rce”
 -   Set the user and password to the ones you found in Task 2
--   The configuration file of phpMyAdmin is called config.inc.php
+-   The configuration file of phpMyAdmin is called `config.inc.php`
 -   Look a the bottom of the file
 </details>
   
@@ -90,11 +90,11 @@ The flag is the password you uncovered by hash cracking.
 
 ### Hints:
 <details>
-  <summary>HINT 1</summary>
+  <summary>HINT</summary>
 
 -   The user we are interested in is the root user with host set to “%”
--   For hashcat, the hash mode is 300 and the hash has no leading “*” character
--   For john, the format is “mysql-sha1” and the hash has a leading “*” character
+-   For `hashcat`, the hash mode is 300 and the hash has no leading “*” character
+-   For `john`, the format is “mysql-sha1” and the hash has a leading “*” character
 </details>
   
 
@@ -110,8 +110,8 @@ The flag is in a database table row value in the format “**FLAG:************�
 
 ### Hints:
 <details>
-  <summary>HINT 1</summary>
+  <summary>HINT</summary>
  
- Just get the flag in gcomp -> secret_data -> third row. It’s not that hard to find it.
+ - Just get the flag in gcomp -> secret_data -> third row. It’s not that hard to find it.
 </details>
   
