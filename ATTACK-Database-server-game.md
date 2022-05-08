@@ -8,6 +8,20 @@ You are a penetration tester hired by a small company. They have an internal net
 
 Login to your attacking machine with username **kali** and password **kali**. Follow given tasks and perform a penetration test for the database and web system. Each task has a flag value you should be able to find if you’ve followed and performed the task instructions. There’s also a binary file in your **home directory** called `flag-check` which serves as a tool to check if you got the correct flag values. To use it, write your flags in a file using format “**# - FLAG**”, where # is the task number and FLAG is the flag value, and pass this file as an argument to the `flag-check` tool.
 
+## Rules:
+
+-   Need of basic command console commands and basic Linux operating system knowledge.
+
+-   Participants are free to use the internet for information search
+    
+-   All accounts, services or files, which contain the string “vagrant” in their name are to be ignored by the participants.
+    
+-   Tampering with systems outside the scope of task assignments could have negative impact on the environment functionality, do so at your own risk
+    
+-   Interfering or tampering with support utilities, configurations or accounts used for the correct functionality of the environment is prohibited
+    
+-   Evaluation of the exercise can be obtained from validation binary files
+
 ## Task 1: Discovering the network
 
 ### Task assignment:

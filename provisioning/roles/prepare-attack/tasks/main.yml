@@ -6,3 +6,5 @@
     owner: root
     mode: u=rw,g=r,o=x
     
+- name: Reboot host
+  command: reboot

@@ -24,6 +24,21 @@ The company provided you with the credentials in the format “**username : pass
 
 Login to your management machine with username **manager** and password **manager-gcomp**. Follow given tasks and perform required changes. You can check completion of each task by navigating to `/home/manager/check_tasks` and executing a binary for the task you want to check.
 
+## Rules:
+
+-   Need of basic command console commands and basic Linux operating system knowledge.
+
+-   Participants are free to use the internet for information search
+    
+-   All accounts, services or files, which contain the string “vagrant” in their name are to be ignored by the participants.
+    
+-   Tampering with systems outside the scope of task assignments could have negative impact on the environment functionality, do so at your own risk
+    
+-   Interfering or tampering with support utilities, configurations or accounts used for the correct functionality of the environment is prohibited
+    
+-   Evaluation of the exercise can be obtained from validation binary files
+
+
 ## Task 1: MySQL/MariaDB configuration
 
 ### Task assignment:

@@ -8,6 +8,20 @@ Si penetračný tester najatý malou firmou. Ich firma má internú sieť, na kt
 
 Prihlás sa do svojho útočného stroja s prihlasovacím menom **kali** a heslom **kali**. Riaď sa zadanými úlohami a vykonaj penetračný test databázového a webového systému. Každá úloha má svoju flag hodnotu, ktorú by si mal nájsť ak si sa riadil úlohami a vykonal potrebné inštrukcie. Vo svojom **home adresári** máš binárny súbor `flag-check`, ktorý slúži ako kontrolný nástroj flag hodnôt. Pre jeho použitie je potrebné si flag hodnoty zapísať do súboru vo formáte “**# - FLAG**”, kde # je číslo úlohy a FLAG je hodnota flagu. Následne treba tento súbor použiť ako argument binárky `flag-check`.
 
+## Pravidlá:
+
+-   Potrebná základná znalosť práce s príkazovým riadkom a operačným systémom Linux
+    
+-   Účastník cvičenia môže používať internet pre vyhľadávanie informácií
+    
+-   Všetky účty, služby alebo súbory, ktoré obsahujú názov “vagrant” musia byť účastníkom ignorované
+    
+-   Zasahovanie do systémov mimo zadania úlohy môže znemožniť správne fungovanie a preto je možné iba na vlastné riziko
+    
+-   Zasahovanie do pomocných nástrojov, konfigurácií ale účtov potrebných pre správne fungovanie infrastruktury cvičenia je zakázané
+    
+-   Hodnotenie cvičenia je možné získať z validačných binárnych súborov
+
 ## Úloha 1: Prieskum siete
 
 ### Zadanie úlohy:

@@ -23,7 +23,20 @@ Firma si ťa najala na nájdenie a opravu potenciálnych bezpečnostných chýb 
 
 Prihlás sa do svojho správcovského stroja s prihlasovacím menom **manager** a heslom **manager-gcomp**. Riaď sa zadanými úlohami a vykonávaj potrebné zmeny. Úspešnosť jednotlivých úloh si môžeš skontrolovať **spustením binárnych súborov** v adresári `/home/manager/check_tasks`.
 
-  
+## Pravidlá:
+
+-   Potrebná základná znalosť práce s príkazovým riadkom a operačným systémom Linux
+    
+-   Účastník cvičenia môže používať internet pre vyhľadávanie informácií
+    
+-   Všetky účty, služby alebo súbory, ktoré obsahujú názov “vagrant” musia byť účastníkom ignorované
+    
+-   Zasahovanie do systémov mimo zadania úlohy môže znemožniť správne fungovanie a preto je možné iba na vlastné riziko
+    
+-   Zasahovanie do pomocných nástrojov, konfigurácií ale účtov potrebných pre správne fungovanie infrastruktury cvičenia je zakázané
+    
+-   Hodnotenie cvičenia je možné získať z validačných binárnych súborov
+
 
 ## Úloha 1: MySQL/MariaDB konfigurácia
 

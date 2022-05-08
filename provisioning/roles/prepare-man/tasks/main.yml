@@ -43,3 +43,5 @@
     - "task4_test"
     - "task5_test"
     
+- name: Reboot host
+  command: reboot   
