@@ -66,11 +66,13 @@ Vypíšte a prezrite si **user tabuľku**, pričom opravte nasledovné základn�
 
 ### Zadanie úlohy:
 
-Na **webovom serveri** nastavte **alias pre phpMyAdmin** webovú aplikáciu v konfiguračnom súbore služby Apache.
+Na **webovom serveri** zmeňte **alias pre phpMyAdmin** webovú aplikáciu v konfiguračnom súbore služby Apache.
 
 Následne otvorte **phpMyAdmin konfiguračný súbor** a prezrite si v ňom nastavenia.
 
 Nastavte **blowfish secret** a **odstráňte zanechané prihlasovacie údaje** pre pripojenie do MySQL, ktoré boli v súbore ponechané.
+
+Nezabudnite po vykonaní zmien reštartovať Apache službu.
 
 ### Nápovedy:
 
@@ -88,20 +90,20 @@ Nastavte **blowfish secret** a **odstráňte zanechané prihlasovacie údaje** p
 
 Chceme zabezpečiť komunikáciu medzi phpMyAdmin a MySQL pomocou SSL. K dispozícií už máme **certifikačné súbory a súbory s kľúčmi pre server a klienta**. Môžeme ich nájsť na **databázovom serveri v adresári**  `/etc/mysql/ssl` .
 
-Potrebuje presunúť alebo **prekopírovať CA certifikát, klient certifikát a klient kľúč na webový server**.
+Potrebuje presunúť alebo **prekopírovať CA certifikát, klient certifikát a klient kľúč na webový server**. Vytvorte si na webovom serveri vhodne umiestnený adresár pre tieto súbory, tak aby ste do neho mohli zapisovať (pri kopírovaní môžete mať problém s právami, ktorý sa dá riešiť viacerými spôsobmi).
+
+Nezabudnite nastaviť **vlastníka a skupinu** pre všetky **súbory používané pri SSL** aby Apache, ktorý beží pod používateľom `www-data` a MySQL, ktorý beží pod používateľom `mysql`, vedeli čítať tieto súbory.
 
 Ďalej otvorte a **editujte MySQL konfiguračný súbor**  `/etc/mysql/mariadb.conf.d/50-server.cnf`, kde **nastavte a zapnite SSL** komunikáciu. V konfiguračnom súbore môžete nájsť aj nejaké defaultné zakomentované SSL nastavenia. Tu dávajte ale pozor na `ssl = on`, čo nie je správne nastavenie. Správne nastavenie pre zapnutie SSL je `ssl = true`.
 
 Podobne **nastavte SSL** komunikáciu **na strane webového servera**, kde editujete **konfiguračný súbor phpMyAdmin** webovej aplikácie. Nastavenie `ssl_verify` ponechajte na hodnote false.
-
-Nezabudnite nastaviť **vlastníka a skupinu** pre všetky **súbory používané pri SSL** aby Apache, ktorý beží pod používateľom `www-data` a MySQL, ktorý beží pod používateľom `mysql`, vedeli čítať tieto súbory.
 
 ### Nápovedy:
 
 <details>
   <summary>NÁPOVEDA</summary>
   
--   Na kopírovanie súborov môžete použiť `rsync`. Vyhľadajte si “rsync with sudo”.
+-   Na kopírovanie súborov môžete použiť `scp` alebo `rsync`.
 -   V konfiguračných súboroch stačí nastaviť cesty k potrebným SSL súborom a zapnúť SSL.
 -   Pamätajte, že databázový server používa server certifikát a klúč a webový server používa klient certifikát a klúč.
 -   Pre zmenu vlastníka a skupiny súborov, použite príkaz `chown`.

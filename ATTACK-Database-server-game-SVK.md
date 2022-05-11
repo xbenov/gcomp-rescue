@@ -51,7 +51,7 @@ Je čas pre základné zisťovanie defaultných alebo jednoduchých prihlasovac�
 
 Existuje mocný framework menom **Metasploit**, ktorý je používaný pri penetračnom testovaní. Spustite nástroj `msfconsole`, ktorý slúži ako rozhranie pre Metasploit a vyhľadajte “**phpmyadmin**”. Vo výsledkoch hľadania je skenovací modul s názvom **phpmyadmin_login**. Použite tento modul. Po jeho vybraní, napíšte `options` pre zobrazenie nastavení modulu.
 
-Tu je treba nastaviť **RHOSTS** na IP adresu cieľového zariadenia, zmeniť **TARGETURI** na hodnotu, ktorú používa webový server, zvoliť slovníkový súbor prihlasovacích údajov v **USER_PASS** nastavení pre zrýchlenie hľadania a taktiež nastaviť **STOP_ON_SUCCESS** na hodnotu true, aby sa sken zastavil pri prvej nájdenej kombinácií. Slovníkový súbor s prihlasovacími údajmi, ktorý použijete je `/usr/share/wordlists/metasploit/default_userpass_for_services_unhash.txt`
+Tu je treba nastaviť **RHOSTS** na IP adresu cieľového zariadenia, zmeniť **TARGETURI** na hodnotu, ktorú používa webový server, zvoliť slovníkový súbor prihlasovacích údajov v **USERPASS_FILE** nastavení pre zrýchlenie hľadania a taktiež nastaviť **STOP_ON_SUCCESS** na hodnotu true, aby sa sken zastavil pri prvej nájdenej kombinácií. Slovníkový súbor s prihlasovacími údajmi, ktorý použijete je `/usr/share/wordlists/metasploit/default_userpass_for_services_unhash.txt`
 
 Po nastavení modulu stačí napísať príkaz `run` a nechať sken prebehnúť pokým niečo nenájde.
 

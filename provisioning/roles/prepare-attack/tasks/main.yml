@@ -6,5 +6,16 @@
     owner: root
     mode: u=rw,g=r,o=x
     
+#---------------- Fix DNS server missing after reboot ---------------    
+
+- name: Add DNS server to interfaces
+  lineinfile:
+    path: /etc/network/interfaces
+    state: present
+    regexp: '^    dns-nameservers'
+    insertbefore: '^# END eth0'
+    line: "    dns-nameservers 10.0.2.3"
+
+
 - name: Reboot host
   command: reboot

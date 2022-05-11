@@ -64,11 +64,13 @@ On the **database server**, log in to the `mysql` service as the **root user**, 
 
 ### Task assignment:
 
-On the web server, set an **alias for the phpMyAdmin** web app in the **Apache configuration file**. 
+On the web server, change the **alias for the phpMyAdmin** web app in the **Apache configuration file**. 
 
 After that open the **phpMyAdmin configuration file** and review the settings. 
 
 Configure a **blowfish secret** and **remove leftover credentials** for connection to MySQL which were left behind.
+
+Don't forget to restart the Apache service after making changes.
 
 ### Hints:
 
@@ -87,20 +89,21 @@ Configure a **blowfish secret** and **remove leftover credentials** for connecti
 
 We want to secure our communication from phpMyAdmin to MySQL **using SSL**. We already have our **certificate and key files** for server and client, which can be found on the database server in `/etc/mysql/ssl directory`.
 
-We now need to **copy the CA certificate, client key and client certificate** to the web server.
+We now need to **copy the CA certificate, client key and client certificate** to the web server. On the web server, create a directory for these files, so that you have write permissions (there can be problems with permissions during copying, which have various solutions you can find).
+
+Don’t forget to change the appropriate **owner and group for all files used for SSL**, so that Apache which runs under `www-data` and Mysql which runs under `mysql` can read them.
 
 After that, **open and edit the MySQL configuration file** and set up SSL configuration settings. There’s a peculiarity in the commented out SSL settings provided in the configuration file and it’s that “`ssl = on`” is not a valid setting. The correct setting that you must use is “`ssl = true`”.
 
 Do the same on the web server side with the **phpMyAdmin configuration file**. Leave the `ssl_verify` setting as false.
 
-Don’t forget to change the appropriate **owner and group for all files used for SSL**, so that Apache which runs under `www-data` and Mysql which runs under `mysql` can read them.
 
 ### Hints:
 
 <details>
   <summary>HINT</summary>
   
-  -   You can use the `rsync` tool to copy the files. Search for “using rsync with sudo”.
+  -   You can use the `scp` or `rsync` tool to copy the files.
 -   In the configuration files, you just need to specify the paths to certificates and keys, and to turn SSL on.
 -   Remember that the database server uses server key and certificate and the web server uses client key and certificate.
 -   For owner or group change of files, use `chown` command.

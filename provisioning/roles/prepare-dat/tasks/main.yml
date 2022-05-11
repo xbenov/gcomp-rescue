@@ -122,8 +122,24 @@
     owner: test
     group: test
     
+#---------------- Edit sudoers for vagrant rsync --------------- 
 
+- name: Add vagrant sudoer for rsync
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^vagrant ALL=NOPASSWD'
+    insertafter: '^%sudo   ALL'
+    line: "vagrant ALL=NOPASSWD:/user/bin/rsync"
+    validate: /usr/sbin/visudo -cf %s
 
-    
+#---------------- Fix DNS server missing after reboot ---------------    
 
+- name: Add DNS server to interfaces
+  lineinfile:
+    path: /etc/network/interfaces
+    state: present
+    regexp: '^    dns-nameservers'
+    insertbefore: '^# END eth0'
+    line: "    dns-nameservers 10.0.2.3"
 

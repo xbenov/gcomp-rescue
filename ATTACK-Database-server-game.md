@@ -50,7 +50,7 @@ Now it’s time for some basic default or easy credentials checking. For this yo
 
 There’s a mighty framework called **Metasploit**, which can be used for many penetration tests. Launch `msfconsole` tool, which is an interface for Metasploit, and search for “**phpmyadmin**”. There is a scanner type module for phpMyAdmin called **phpmyadmin_login**. Use this module. After selecting it, type `options` to show available options of this module.
 
-Here we need to set **RHOSTS** to our target machine IP address, change the **TARGETURI** to the one which the web server uses, select a userpass wordlist in **USER_PASS** option to make things faster and also set the option **STOP_ON_SUCCESS** to true so that the scan stops on the first valid credentials found.
+Here we need to set **RHOSTS** to our target machine IP address, change the **TARGETURI** to the one which the web server uses, select a userpass wordlist in **USERPASS_FILE** option to make things faster and also set the option **STOP_ON_SUCCESS** to true so that the scan stops on the first valid credentials found.
 
 The wordlist you will use is `/usr/share/wordlists/metasploit/default_userpass_for_services_unhash.txt` .
 

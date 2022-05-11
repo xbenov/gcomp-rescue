@@ -20,13 +20,18 @@
     generate_ssh_key: yes
     password: $1$Vd7hkkIV$GUfuLb1rv8eiuu1kA8wLQ.
     
+- name: Install cracklib for PAM password policies
+  apt:
+    name: libpam-cracklib
+    state: present
+    
 #---------------- Fix session directory and permissions ---------------
 
 - name: Change session directory for php
   lineinfile:
     path: /etc/php/7.0/apache2/php.ini
     search_string: 'session.save_path'
-    line: 'ession.save_path = "/var/lib/php/sessions"'
+    line: 'session.save_path = "/var/lib/php/sessions"'
     
 - name: Change permissions for session directory
   file:
@@ -35,11 +40,6 @@
     recurse: yes
     owner: www-data
     group: www-data
-
-- name: Install cracklib for PAM password policies
-  apt:
-    name: libpam-cracklib
-    state: present
 
 #---------------- SSL certificates ---------------    
 
@@ -66,6 +66,25 @@
     owner: gcomp-web
     group: gcomp-web
     
+#---------------- Edit sudoers for vagrant rsync --------------- 
 
+- name: Add vagrant sudoer for rsync
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^vagrant ALL=NOPASSWD'
+    insertafter: '^%sudo   ALL'
+    line: "vagrant ALL=NOPASSWD:/user/bin/rsync"
+    validate: /usr/sbin/visudo -cf %s
+
+#---------------- Fix DNS server missing after reboot ---------------    
+
+- name: Add DNS server to interfaces
+  lineinfile:
+    path: /etc/network/interfaces
+    state: present
+    regexp: '^    dns-nameservers'
+    insertbefore: '^# END eth0'
+    line: "    dns-nameservers 10.0.2.3"
 
 
