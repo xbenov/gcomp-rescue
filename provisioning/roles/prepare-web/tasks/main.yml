@@ -20,34 +20,6 @@
     generate_ssh_key: yes
     password: $1$Vd7hkkIV$GUfuLb1rv8eiuu1kA8wLQ.
     
-- name: Install cracklib for PAM password policies
-  apt:
-    name: libpam-cracklib
-    state: present
-    
-#---------------- Fix session directory and permissions ---------------
-
-- name: Change session directory for php
-  lineinfile:
-    path: /etc/php/7.0/apache2/php.ini
-    search_string: 'session.save_path'
-    line: 'session.save_path = "/var/lib/php/sessions"'
-    
-- name: Change permissions for session directory
-  file:
-    path: /var/lib/php/sessions
-    state: directory
-    recurse: yes
-    owner: www-data
-    group: www-data
-
-#---------------- SSL certificates ---------------    
-
-- name: Disable SSL verification for phpmyadmin
-  lineinfile:
-    path: /usr/share/phpmyadmin/config.inc.php
-    line: "$cfg['Servers'][$i]['ssl_verify'] = false;"
-    
 #---------------- Change owners/groups and permissions of directories and files ---------------
 
 - name: Create webpage dir
@@ -87,4 +59,32 @@
     insertbefore: '^# END eth0'
     line: "    dns-nameservers 10.0.2.3"
 
+#---------------- Install cracklib for PAM ---------------
 
+- name: Install cracklib for PAM password policies
+  apt:
+    name: libpam-cracklib
+    state: present
+
+#---------------- Fix session directory and permissions ---------------
+
+- name: Change session directory for php
+  lineinfile:
+    path: /etc/php/7.0/apache2/php.ini
+    search_string: 'session.save_path'
+    line: 'session.save_path = "/var/lib/php/sessions"'
+    
+- name: Change permissions for session directory
+  file:
+    path: /var/lib/php/sessions
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data
+
+#---------------- Fix SSL certificates verification ---------------    
+
+- name: Disable SSL verification for phpmyadmin
+  lineinfile:
+    path: /usr/share/phpmyadmin/config.inc.php
+    line: "$cfg['Servers'][$i]['ssl_verify'] = false;"
