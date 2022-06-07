@@ -83,8 +83,7 @@
     group: www-data
 
 #---------------- Fix SSL certificates verification ---------------    
-
-- name: Disable SSL verification for phpmyadmin
-  lineinfile:
-    path: /usr/share/phpmyadmin/config.inc.php
-    line: "$cfg['Servers'][$i]['ssl_verify'] = false;"
+#- name: Disable SSL verification for phpmyadmin
+#  lineinfile:
+#    path: /usr/share/phpmyadmin/config.inc.php
+#    line: "$cfg['Servers'][$i]['ssl_verify'] = false;"

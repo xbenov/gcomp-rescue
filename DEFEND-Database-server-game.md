@@ -95,7 +95,7 @@ Don’t forget to change the appropriate **owner and group for all files used fo
 
 After that, **open and edit the MySQL configuration file** and set up SSL configuration settings. There’s a peculiarity in the commented out SSL settings provided in the configuration file and it’s that “`ssl = on`” is not a valid setting. The correct setting that you must use is “`ssl = true`”.
 
-Do the same on the web server side with the **phpMyAdmin configuration file**. Leave the `ssl_verify` setting as false.
+Do the same on the web server side with the **phpMyAdmin configuration file**.
 
 
 ### Hints:

@@ -96,7 +96,7 @@ Nezabudnite nastaviť **vlastníka a skupinu** pre všetky **súbory používan�
 
 Ďalej otvorte a **editujte MySQL konfiguračný súbor**  `/etc/mysql/mariadb.conf.d/50-server.cnf`, kde **nastavte a zapnite SSL** komunikáciu. V konfiguračnom súbore môžete nájsť aj nejaké defaultné zakomentované SSL nastavenia. Tu dávajte ale pozor na `ssl = on`, čo nie je správne nastavenie. Správne nastavenie pre zapnutie SSL je `ssl = true`.
 
-Podobne **nastavte SSL** komunikáciu **na strane webového servera**, kde editujete **konfiguračný súbor phpMyAdmin** webovej aplikácie. Nastavenie `ssl_verify` ponechajte na hodnote false.
+Podobne **nastavte SSL** komunikáciu **na strane webového servera**, kde editujete **konfiguračný súbor phpMyAdmin** webovej aplikácie.
 
 ### Nápovedy:
 
